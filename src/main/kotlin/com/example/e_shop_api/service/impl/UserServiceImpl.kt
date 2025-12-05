@@ -25,4 +25,16 @@ class UserServiceImpl(
         }.let(userRepository::save)
             .let { UserDto().apply { this.id = it.id; this.username = it.username } }
     }
+
+    override fun login(username: String, password: String): UserDto {
+        val user = userRepository.findByUsername(username)
+            ?: throw RuntimeException("Invalid username or password")
+
+        if (user.password != password) throw RuntimeException("Invalid username or password")
+
+        return UserDto().apply {
+            id = user.id
+            this.username = user.username
+        }
+    }
 }
