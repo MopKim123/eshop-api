@@ -32,4 +32,10 @@ class CartController(
     ): ResponseEntity<CartDto> {
         return ResponseEntity.ok(cartService.updateCartItem(cartItemId, quantity))
     }
+
+    @DeleteMapping("/item/{cartItemId}")
+    fun removeCartItem(@PathVariable cartItemId: Long): ResponseEntity<Void> {
+        cartService.removeCartItem(cartItemId)
+        return ResponseEntity.noContent().build()
+    }
 }

@@ -59,6 +59,22 @@ class CartServiceImpl(
         }.toResponse()
     }
 
+    @Transactional
+    override fun removeCartItem(cartItemId: Long) {
+        val item = cartItemRepository.findById(cartItemId)
+            .orElseThrow { RuntimeException("Cart item not found") }
+
+        val cart = item.cart ?: throw RuntimeException("Cart not found")
+
+        // Delete the cart item
+        cartItemRepository.deleteById(cartItemId)
+
+        // Update cart timestamp
+        cart.updatedAt = LocalDateTime.now()
+        cartRepository.save(cart)
+    }
+
+
     private fun createCart(userId: Long): Cart {
         return Cart().apply {
             user = userRepository.findById(userId)
