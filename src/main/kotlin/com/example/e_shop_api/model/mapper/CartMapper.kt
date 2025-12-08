@@ -22,6 +22,7 @@ object CartMapper {
 
     fun CartItem.toResponse(): CartItemDto {
         val dto = CartItemDto()
+        dto.id = this.id
         dto.productId = this.product?.id
         dto.productName = this.product?.name
         dto.quantity = this.quantity

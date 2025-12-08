@@ -1,6 +1,7 @@
 package com.example.e_shop_api.model.dto
 
 class CartItemDto {
+    var id: Long? = 0
     var productId: Long? = null
     var productName: String? = null
     var quantity: Int = 1
